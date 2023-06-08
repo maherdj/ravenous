@@ -6,17 +6,19 @@ import SearchIcon from "@mui/icons-material/Search";
 import TextField from "@mui/material/TextField";
 
 
+
 function SearchBar() {
     return (
         <>
             <form>
-                <TextField
-                    id="search-bar"
-                    className="text"
-                    label="Search..."
-                    size="small">
+                    <TextField
+                        id="search-bar"
+                        className="text"
+                        label="Search..."
+                        size="small"
+                        sx={{color: "gray"}}>
 
-                </TextField>
+                    </TextField>
                 <IconButton type="submit" aria-label="search">
                     <SearchIcon/>
                 </IconButton>
