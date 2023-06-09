@@ -10,11 +10,13 @@ export function BusinessList() {
       rowSpacing={1}
       columnSpacing={{ xs: 1, sm: 2, md: 3 }}
       justifyContent={"center"}
+      alignItems={"center"}
+      sx={{ paddingLeft: "100px" }}
     >
-      <Grid item md={3}>
+      <Grid item sm={3}>
         <Business />
       </Grid>
-      <Grid item md={3}>
+      <Grid item sm={3}>
         <Business />
       </Grid>
       <Grid item md={3}>
