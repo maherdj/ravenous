@@ -3,7 +3,7 @@ import Business from "./Business";
 
 import Grid from "@mui/material/Grid";
 
-export function BusinessList() {
+export function BusinessList({ businesses }) {
   return (
     <Grid
       container
@@ -11,17 +11,16 @@ export function BusinessList() {
       columnSpacing={{ xs: 1, sm: 2, md: 3 }}
       justifyContent={"center"}
       alignItems={"center"}
-      sx={{ paddingLeft: "100px" }}
+      sx={{ paddingLeft: "50px" }}
+      margin={3}
     >
-      <Grid item sm={3}>
-        <Business />
-      </Grid>
-      <Grid item sm={3}>
-        <Business />
-      </Grid>
-      <Grid item md={3}>
-        <Business />
-      </Grid>
+      {businesses.map((business) => {
+        return (
+          <Grid item sm={3.5}>
+            <Business business={business} />
+          </Grid>
+        );
+      })}
     </Grid>
   );
 }

@@ -9,10 +9,11 @@ img {
 
 .search-wrapper {
   position: absolute;
-  top: 450px;
-  left: 695px;
+  margin: 0px;
+  top: 100px;
+  left: 520px;
   width: 300px;
-  height: 200px;
+  height: 500px;
   display: flex;
   align-items: center;
 }
