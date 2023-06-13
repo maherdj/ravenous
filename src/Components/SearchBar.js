@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import IconButton from "@mui/material/IconButton";
 import SearchIcon from "@mui/icons-material/Search";
 import TextField from "@mui/material/TextField";
@@ -8,15 +8,52 @@ import ButtonGroup from "@mui/material/ButtonGroup";
 import Container from "@mui/material/Container";
 
 function SearchBar() {
-  const [selected, setSelected] = useState({
-    activeObject: null,
-    objects: [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }],
-  });
+  const [bestMatchSelected, setBestMatchSelected] = useState(false);
+  const [highestRatedSelected, setHighestRatedSelected] = useState(false);
+  const [mostReviewedSelected, setMostReviewedSelected] = useState(false);
 
-  const selectChoice = () => {
-    setSelected(!selected);
+  const searchTypeRef = useRef();
+  const searchLocationRef = useRef();
+
+  // will need to refractor this, I don't think this is the best way to do this
+  const selectBestMatch = () => {
+    setBestMatchSelected(!bestMatchSelected);
+    setHighestRatedSelected(false);
+    setMostReviewedSelected(false);
   };
 
+  const selectHighestRated = () => {
+    setHighestRatedSelected(!highestRatedSelected);
+    setMostReviewedSelected(false);
+    setBestMatchSelected(false);
+  };
+
+  const selectMostReviewed = () => {
+    setMostReviewedSelected(!mostReviewedSelected);
+    setBestMatchSelected(false);
+    setHighestRatedSelected(false);
+  };
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+
+    let searchTypeValue = searchTypeRef.current.value;
+    let searchLocationValue = searchLocationRef.current.value;
+
+    if (bestMatchSelected === true) {
+      console.log(
+        `searching Yelp with ${searchTypeValue}, ${searchLocationValue}, best_match`
+      );
+    } else if (highestRatedSelected === true) {
+      console.log(
+        `searching Yelp with ${searchTypeValue}, ${searchLocationValue}, highest_rated`
+      );
+    } else if (mostReviewedSelected === true) {
+      console.log(
+        `searching Yelp with ${searchTypeValue}, ${searchLocationValue}, most_reviewed`
+      );
+    }
+  };
   return (
     <>
       <Container sx={{}}>
@@ -30,20 +67,23 @@ function SearchBar() {
         >
           <ButtonGroup sx={{ backgroundColor: "white" }}>
             <Button
-              sx={{ bgcolor: selected ? "gold" : "white" }}
-              onClick={selectChoice}
+              sx={{ bgcolor: bestMatchSelected ? "gold" : "white" }}
+              onClick={selectBestMatch}
+              select="Best Match"
             >
               Best Match
             </Button>
             <Button
-              sx={{ bgcolor: selected ? "gold" : "white" }}
-              onClick={selectChoice}
+              sx={{ bgcolor: highestRatedSelected ? "gold" : "white" }}
+              onClick={selectHighestRated}
+              select="Highest Rated"
             >
               Highest Rated
             </Button>
             <Button
-              sx={{ backgroundColor: selected ? "gold" : "white" }}
-              onClick={selectChoice}
+              sx={{ backgroundColor: mostReviewedSelected ? "gold" : "white" }}
+              onClick={selectMostReviewed}
+              select="Most Reviewed"
             >
               Most Reviewed
             </Button>
@@ -55,7 +95,8 @@ function SearchBar() {
           sx={{ position: "absolute", width: "700px", height: "200px" }}
         >
           <TextField
-            id="search-bar"
+            id="type-bar"
+            ref={searchTypeRef}
             className="text"
             hiddenLabel
             size="small"
@@ -63,7 +104,8 @@ function SearchBar() {
             sx={{ bgcolor: "#fff", position: "relative" }}
           ></TextField>
           <TextField
-            id="search-bar"
+            id="loaction-search"
+            ref={searchLocationRef}
             className="text"
             hiddenLabel
             size="small"
@@ -73,6 +115,7 @@ function SearchBar() {
           <IconButton
             type="submit"
             aria-label="search"
+            onClick={onSubmit}
             sx={{
               bgcolor: "#fff",
               borderBottomRightRadius: "0px",
@@ -91,5 +134,4 @@ function SearchBar() {
     </>
   );
 }
-
 export default SearchBar;
